@@ -1,0 +1,11 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="jeremy.somsouk" id="1">
+        <addColumn tableName="stats">
+            <column name="sessions" type="int"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

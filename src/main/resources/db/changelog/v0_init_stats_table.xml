@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="jeremy.somsouk" id="0">
+        <createTable tableName="stats">
+            <column name="stats_id" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="time" type="timestamp without time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cdn" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="p2p" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
