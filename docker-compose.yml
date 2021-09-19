@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  app:
+    image: 'myp2p:latest'
+    build:
+      context: ""
+    container_name: app
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+      - redis-server
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/stats
+      - SPRING_DATASOURCE_USERNAME=stats-postgres
+      - SPRING_DATASOURCE_PASSWORD=stats-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_LIQUIBASE_CHANGE-LOG=classpath:db/changelog/db.changelog-master.xml
+      - SPRING.REDIS.DATABASE=0
+      - SPRING.REDIS.HOST=redis-server
+      - SPRING.REDIS.PORT=6379
+      - SPRINGDOC_SWAGGER-UI_PATH=/swagger-ui.html
+
+
+  db:
+    image: 'postgres:13.4-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=stats-postgres
+      - POSTGRES_PASSWORD=stats-postgres
+      - POSTGRES_DB=stats
+
+  redis-server:
+    hostname: redis
+    image: 'redis:alpine'
+    ports:
+      - "6379:6379"
