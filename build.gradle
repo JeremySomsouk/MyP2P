@@ -1,0 +1,48 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+jar {
+	enabled = false
+}
+
+group = 'com.streaming'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.liquibase:liquibase-core'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.3.4'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	def junitJupiterVersion = '5.4.2'
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+	testImplementation "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+	testImplementation "org.mockito:mockito-junit-jupiter:3.12.4"
+	testImplementation "org.testcontainers:testcontainers:1.16.0"
+	testImplementation 'org.testcontainers:postgresql:1.16.0'
+	testImplementation "org.testcontainers:junit-jupiter:1.16.0"
+}
+
+test {
+	useJUnitPlatform()
+}
