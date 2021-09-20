@@ -31,12 +31,12 @@ public class StatsDto {
 
     @JsonIgnore
     public boolean isInvalid() {
-        return !(StringUtils.isNotBlank(this.token)
-                 && StringUtils.isNotBlank(this.customer)
-                 && !this.customer.contains(":")
-                 && StringUtils.isNotBlank(this.content)
-                 && !this.content.contains(":")
-                 && cdn != null
-                 && p2p != null);
+        return StringUtils.isBlank(this.token)
+               || StringUtils.isBlank(this.customer)
+               || this.customer.contains(":")
+               || StringUtils.isBlank(this.content)
+               || this.content.contains(":")
+               || cdn == null
+               || p2p == null;
     }
 }
