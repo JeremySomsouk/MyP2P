@@ -74,7 +74,41 @@ public class StatsServiceTest extends ContainersConfiguration {
     }
 
     @Test
-    public void processStatistics_shouldSumDataValues_whenProcessedMultipleTimes() throws InterruptedException {
+    public void processStatistics_shouldAddMultipleEntities_withDifferentCustomerContent() throws InterruptedException {
+        // GIVEN
+        var cdn = 123L;
+        var p2p = 345L;
+        StatsDto statsDto = StatsDto.builder()
+                                    .customer("customer11")
+                                    .content("content11")
+                                    .token(UUID.randomUUID().toString())
+                                    .cdn(cdn)
+                                    .p2p(p2p)
+                                    .build();
+        StatsDto statsDto2 = StatsDto.builder()
+                                     .customer("differentCustomer")
+                                     .content("differentContent")
+                                     .token(UUID.randomUUID().toString())
+                                     .cdn(cdn)
+                                     .p2p(p2p)
+                                     .build();
+        when(timeService.getCurrentDateTimeSecond())
+                .thenReturn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        when(timeService.getExpirationDateTimeSecond())
+                .thenReturn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+
+        // WHEN
+        service.processStatistics(statsDto);
+        service.processStatistics(statsDto2);
+        Thread.sleep(1000); // waiting for the scheduler
+
+        // THEN
+        var entities = statsRepository.findAll();
+        assertThat(entities.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void processStatistics_shouldSumDataValues_withSameCustomerContentProcessedMultipleTimes() throws InterruptedException {
         // GIVEN
         var customer = "customer55";
         var content = "content55";
