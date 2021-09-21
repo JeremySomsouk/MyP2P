@@ -5,11 +5,12 @@ I used [Spring Initializr](https://start.spring.io/) to start my project.
 It is a Java 11 project, using docker to spawn a PostgreSQL and Redis database instances.
 
 Since this is a project that needs both instances to run, I made a dockerfile to 'dockerize' this project to launch the 3 components altogether.
+You must have docker on your local machine to pass the tests.
 
 Using gradle, you can build the project with the following command :
-> $ ./gradlew build 
+> $ ./gradlew build
  
-And then we can launch all three components, at the root of this project :
+And then we can launch all three components. At the root of this project :
 > $ cp build/libs/myp2p-1.0.0.jar .
 > 
 > $ docker-compose up --build
@@ -65,6 +66,7 @@ This would be the first element I rework in a version 2 because in a case of app
 ### Next steps
 - Do some stress testing and adjust the needs of resources.
 - Make the process of statistics asynchronous. For example, by adding a messaging queue to consume at a precise datetime the list of pair of "consumer:content" to retrieve from Redis. Storing it into a hashmap is a shortcut.
+- Remove the Testcontainers library as I prefer to have tests that do not depend on having to run some docker containers. I noticed some instabilities going that way. I would rather just mock the expected results and test each logic indepently. 
 
 ### Misc
 - Using TestContainers for the tests is not optimal since it is required to have docker on the local machine that runs the tests. But it simplifies a bit the configuration since we don't need embedded databases for both Redis and Postgres ; 
